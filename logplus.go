@@ -156,123 +156,123 @@ func Logln(log ...interface{}) {
 	fmt.Println(log...)
 }
 
-func ColoredLog(color Color, log ...interface{}) {
+func Colored(color Color, log ...interface{}) {
 	fmt.Print(color)
 	Log(log...)
 	fmt.Print(resetAll)
 }
 
-func ColoredLogf(color Color, format string, log ...interface{}) {
+func Coloredf(color Color, format string, log ...interface{}) {
 	fmt.Print(color)
 	Logf(format, log...)
 	fmt.Print(resetAll)
 }
 
-func ColoredLogln(color Color, log ...interface{}) {
+func Coloredln(color Color, log ...interface{}) {
 	fmt.Print(color)
 	Logln(log...)
 	fmt.Print(resetAll)
 }
 
-func FatalLog(log ...interface{}) {
+func Fatal(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(BackgroundRed, FATAL, resetAll)
 		Log(log...)
 	}
 }
 
-func FatalLogf(format string, log ...interface{}) {
+func Fatalf(format string, log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(BackgroundRed, FATAL, resetAll)
 		Logf(format, log...)
 	}
 }
 
-func FatalLogln(log ...interface{}) {
+func Fatalln(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(BackgroundRed, FATAL, resetAll)
 		Logln(log...)
 	}
 }
 
-func ErrorLog(log ...interface{}) {
+func Error(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(BackgroundMagenta, ERROR, resetAll)
 		Log(log...)
 	}
 }
 
-func ErrorLogf(format string, log ...interface{}) {
+func Errorf(format string, log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(BackgroundMagenta, ERROR, resetAll)
 		Logf(format, log...)
 	}
 }
 
-func ErrorLogln(log ...interface{}) {
+func Errorln(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(BackgroundMagenta, ERROR, resetAll)
 		Logln(log...)
 	}
 }
 
-func WarnLog(log ...interface{}) {
+func Warn(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
 		Log(log...)
 	}
 }
 
-func WarnLogf(format string, log ...interface{}) {
+func Warnf(format string, log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
 		Logf(format, log...)
 	}
 }
 
-func WarnLogln(log ...interface{}) {
+func Warnln(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
 		Logln(log...)
 	}
 }
 
-func InfoLog(log ...interface{}) {
+func Info(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
 		Log(log...)
 	}
 }
 
-func InfoLogf(format string, log ...interface{}) {
+func Infof(format string, log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
 		Logf(format, log...)
 	}
 }
 
-func InfoLogln(log ...interface{}) {
+func Infoln(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
 		Logln(log...)
 	}
 }
 
-func DebugLog(log ...interface{}) {
+func Debug(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(BackgroundCyan, DEBUG, resetAll)
 		Log(log...)
 	}
 }
 
-func DebugLogf(format string, log ...interface{}) {
+func Debugf(format string, log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(BackgroundCyan, DEBUG, resetAll)
 		Logf(format, log...)
 	}
 }
 
-func DebugLogln(log ...interface{}) {
+func Debugln(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(BackgroundCyan, DEBUG, resetAll)
 		Logln(log...)
