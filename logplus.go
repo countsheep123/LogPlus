@@ -132,7 +132,7 @@ func SetLevel(level LogLevel) {
 }
 
 func isLogAvailable(level LogLevel) bool {
-	if logLevel >= level {
+	if level >= logLevel {
 		return true
 	}
 	return false
@@ -176,107 +176,118 @@ func Coloredln(color Color, log ...interface{}) {
 
 func Fatal(log ...interface{}) {
 	if isLogAvailable(FATAL) {
-		fmt.Print(BackgroundRed, FATAL, resetAll)
+		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
 		Log(log...)
 	}
 }
 
 func Fatalf(format string, log ...interface{}) {
 	if isLogAvailable(FATAL) {
-		fmt.Print(BackgroundRed, FATAL, resetAll)
+		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
 		Logf(format, log...)
 	}
 }
 
 func Fatalln(log ...interface{}) {
 	if isLogAvailable(FATAL) {
-		fmt.Print(BackgroundRed, FATAL, resetAll)
+		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
 		Logln(log...)
 	}
 }
 
 func Error(log ...interface{}) {
 	if isLogAvailable(ERROR) {
-		fmt.Print(BackgroundMagenta, ERROR, resetAll)
+		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
 		Log(log...)
 	}
 }
 
 func Errorf(format string, log ...interface{}) {
 	if isLogAvailable(ERROR) {
-		fmt.Print(BackgroundMagenta, ERROR, resetAll)
+		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
 		Logf(format, log...)
 	}
 }
 
 func Errorln(log ...interface{}) {
 	if isLogAvailable(ERROR) {
-		fmt.Print(BackgroundMagenta, ERROR, resetAll)
+		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
 		Logln(log...)
 	}
 }
 
 func Warn(log ...interface{}) {
 	if isLogAvailable(WARN) {
-		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
+		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
 		Log(log...)
 	}
 }
 
 func Warnf(format string, log ...interface{}) {
 	if isLogAvailable(WARN) {
-		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
+		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
 		Logf(format, log...)
 	}
 }
 
 func Warnln(log ...interface{}) {
 	if isLogAvailable(WARN) {
-		fmt.Print(BackgroundYellow, WARN, resetAll, " ")
+		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
 		Logln(log...)
 	}
 }
 
 func Info(log ...interface{}) {
 	if isLogAvailable(INFO) {
-		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
+		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
 		Log(log...)
 	}
 }
 
 func Infof(format string, log ...interface{}) {
 	if isLogAvailable(INFO) {
-		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
+		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
 		Logf(format, log...)
 	}
 }
 
 func Infoln(log ...interface{}) {
 	if isLogAvailable(INFO) {
-		fmt.Print(BackgroundGreen, INFO, resetAll, " ")
+		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
 		Logln(log...)
 	}
 }
 
 func Debug(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
-		fmt.Print(BackgroundCyan, DEBUG, resetAll)
+		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
 		Log(log...)
 	}
 }
 
 func Debugf(format string, log ...interface{}) {
 	if isLogAvailable(DEBUG) {
-		fmt.Print(BackgroundCyan, DEBUG, resetAll)
+		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
 		Logf(format, log...)
 	}
 }
 
 func Debugln(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
-		fmt.Print(BackgroundCyan, DEBUG, resetAll)
+		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
 		Logln(log...)
 	}
+}
+
+func concat(sep string, strs ...string) string {
+	var result = make([]byte, 0, 100)
+	for i, _ := range strs {
+		result = append(result, strs[i]...)
+		if i < len(strs)-1 {
+			result = append(result, sep...)
+		}
+	}
+	return string(result)
 }
 
 func getCallInfo() *CallInfo {
