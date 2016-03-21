@@ -280,7 +280,7 @@ func Debugln(log ...interface{}) {
 }
 
 func getCallInfo() *CallInfo {
-	pc, filePath, line, _ := runtime.Caller(2)
+	pc, filePath, line, _ := runtime.Caller(3)
 	_, fileName := path.Split(filePath)
 	parts := strings.Split(runtime.FuncForPC(pc).Name(), ".")
 	pl := len(parts)
