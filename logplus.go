@@ -157,125 +157,161 @@ func Logln(log ...interface{}) {
 }
 
 func Colored(color Color, log ...interface{}) {
+	info := getCallInfo()
+	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
 	fmt.Print(color)
-	Log(log...)
+	fmt.Print(log...)
 	fmt.Print(resetAll)
 }
 
 func Coloredf(color Color, format string, log ...interface{}) {
+	info := getCallInfo()
+	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
 	fmt.Print(color)
-	Logf(format, log...)
+	fmt.Printf(format, log...)
 	fmt.Print(resetAll)
 }
 
 func Coloredln(color Color, log ...interface{}) {
+	info := getCallInfo()
+	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
 	fmt.Print(color)
-	Logln(log...)
-	fmt.Print(resetAll)
+	fmt.Print(log...)
+	fmt.Println(resetAll)
 }
 
 func Fatal(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
-		Log(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Print(log...)
 	}
 }
 
 func Fatalf(format string, log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
-		Logf(format, log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Printf(format, log...)
 	}
 }
 
 func Fatalln(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		fmt.Print(concat("", BackgroundRed.String(), FATAL.String(), resetAll))
-		Logln(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Println(log...)
 	}
 }
 
 func Error(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
-		Log(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Print(log...)
 	}
 }
 
 func Errorf(format string, log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
-		Logf(format, log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Printf(format, log...)
 	}
 }
 
 func Errorln(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		fmt.Print(concat("", BackgroundMagenta.String(), ERROR.String(), resetAll))
-		Logln(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Println(log...)
 	}
 }
 
 func Warn(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
-		Log(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Print(log...)
 	}
 }
 
 func Warnf(format string, log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
-		Logf(format, log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Printf(format, log...)
 	}
 }
 
 func Warnln(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		fmt.Print(concat("", BackgroundYellow.String(), WARN.String(), resetAll, " "))
-		Logln(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Println(log...)
 	}
 }
 
 func Info(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
-		Log(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Print(log...)
 	}
 }
 
 func Infof(format string, log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
-		Logf(format, log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Printf(format, log...)
 	}
 }
 
 func Infoln(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		fmt.Print(concat("", BackgroundGreen.String(), INFO.String(), resetAll, " "))
-		Logln(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Println(log...)
 	}
 }
 
 func Debug(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
-		Log(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Print(log...)
 	}
 }
 
 func Debugf(format string, log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
-		Logf(format, log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Printf(format, log...)
 	}
 }
 
 func Debugln(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		fmt.Print(concat("", BackgroundCyan.String(), DEBUG.String(), resetAll))
-		Logln(log...)
+		info := getCallInfo()
+		fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+		fmt.Println(log...)
 	}
 }
 
@@ -291,7 +327,7 @@ func concat(sep string, strs ...string) string {
 }
 
 func getCallInfo() *CallInfo {
-	pc, filePath, line, _ := runtime.Caller(3)
+	pc, filePath, line, _ := runtime.Caller(2)
 	_, fileName := path.Split(filePath)
 	parts := strings.Split(runtime.FuncForPC(pc).Name(), ".")
 	pl := len(parts)
