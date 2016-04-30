@@ -142,45 +142,42 @@ func isLogAvailable(level LogLevel) bool {
 }
 
 func Log(log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
 	fmt.Print(log...)
 }
 
 func Logf(format string, log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
 	fmt.Printf(format, log...)
 }
 
 func Logln(log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
 	fmt.Println(log...)
 }
 
 func Colored(color Color, log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
-	fmt.Print(color)
-	fmt.Print(log...)
-	fmt.Print(resetAll)
+	s := fmt.Sprint(log...)
+	fmt.Print(concat("", color.String(), s, resetAll))
 }
 
 func Coloredf(color Color, format string, log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
-	fmt.Print(color)
-	fmt.Printf(format, log...)
-	fmt.Print(resetAll)
+	s := fmt.Sprintf(format, log...)
+	fmt.Print(concat("", color.String(), s, resetAll))
 }
 
 func Coloredln(color Color, log ...interface{}) {
-	printCaller(3)
+	printCallInfo(3)
 
-	fmt.Print(color)
-	fmt.Print(log...)
-	fmt.Println(resetAll)
+	s := fmt.Sprint(log...)
+	fmt.Println(concat("", color.String(), s, resetAll))
 }
 
 func Panic(log ...interface{}) {
@@ -352,10 +349,10 @@ func concat(sep string, strs ...string) string {
 
 func printLogInfo(color Color, level LogLevel) {
 	fmt.Print(concat("", color.String(), level.String(), resetAll), " ")
-	printCaller(4)
+	printCallInfo(4)
 }
 
-func printCaller(depth int) {
+func printCallInfo(depth int) {
 	t := time.Now().Format(timeFormat)
 	info := getCallInfo(depth)
 	fmt.Printf("%s [%s] <%d> ", t, info, os.Getpid())
