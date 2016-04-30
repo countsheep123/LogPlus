@@ -142,42 +142,42 @@ func isLogAvailable(level LogLevel) bool {
 }
 
 func Log(log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Print(log...)
 }
 
 func Logf(format string, log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Printf(format, log...)
 }
 
 func Logln(log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Println(log...)
 }
 
 func Colored(color Color, log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Print(color)
 	fmt.Print(log...)
 	fmt.Print(resetAll)
 }
 
 func Coloredf(color Color, format string, log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Print(color)
 	fmt.Printf(format, log...)
 	fmt.Print(resetAll)
 }
 
 func Coloredln(color Color, log ...interface{}) {
-	info := getCallInfo()
-	fmt.Printf("%s [%s] <%d> ", time.Now().Format(timeFormat), info, os.Getpid)
+	printCaller(3)
+
 	fmt.Print(color)
 	fmt.Print(log...)
 	fmt.Println(resetAll)
@@ -186,6 +186,7 @@ func Coloredln(color Color, log ...interface{}) {
 func Panic(log ...interface{}) {
 	if isLogAvailable(PANIC) {
 		printLogInfo(BackgroundRed, PANIC)
+
 		fmt.Print(log...)
 
 		panic(fmt.Sprint(log...))
@@ -195,6 +196,7 @@ func Panic(log ...interface{}) {
 func Panicf(format string, log ...interface{}) {
 	if isLogAvailable(PANIC) {
 		printLogInfo(BackgroundRed, PANIC)
+
 		fmt.Printf(format, log...)
 
 		panic(fmt.Sprintf(format, log...))
@@ -204,6 +206,7 @@ func Panicf(format string, log ...interface{}) {
 func Panicln(log ...interface{}) {
 	if isLogAvailable(PANIC) {
 		printLogInfo(BackgroundRed, PANIC)
+
 		fmt.Println(log...)
 
 		panic(fmt.Sprintln(log...))
@@ -213,6 +216,7 @@ func Panicln(log ...interface{}) {
 func Fatal(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		printLogInfo(BackgroundRed, FATAL)
+
 		fmt.Print(log...)
 
 		os.Exit(1)
@@ -222,6 +226,7 @@ func Fatal(log ...interface{}) {
 func Fatalf(format string, log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		printLogInfo(BackgroundRed, FATAL)
+
 		fmt.Printf(format, log...)
 
 		os.Exit(1)
@@ -231,6 +236,7 @@ func Fatalf(format string, log ...interface{}) {
 func Fatalln(log ...interface{}) {
 	if isLogAvailable(FATAL) {
 		printLogInfo(BackgroundRed, FATAL)
+
 		fmt.Println(log...)
 
 		os.Exit(1)
@@ -240,6 +246,7 @@ func Fatalln(log ...interface{}) {
 func Error(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		printLogInfo(BackgroundMagenta, ERROR)
+
 		fmt.Print(log...)
 	}
 }
@@ -247,6 +254,7 @@ func Error(log ...interface{}) {
 func Errorf(format string, log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		printLogInfo(BackgroundMagenta, ERROR)
+
 		fmt.Printf(format, log...)
 	}
 }
@@ -254,6 +262,7 @@ func Errorf(format string, log ...interface{}) {
 func Errorln(log ...interface{}) {
 	if isLogAvailable(ERROR) {
 		printLogInfo(BackgroundMagenta, ERROR)
+
 		fmt.Println(log...)
 	}
 }
@@ -261,6 +270,7 @@ func Errorln(log ...interface{}) {
 func Warn(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		printLogInfo(BackgroundYellow, WARN)
+
 		fmt.Print(log...)
 	}
 }
@@ -268,6 +278,7 @@ func Warn(log ...interface{}) {
 func Warnf(format string, log ...interface{}) {
 	if isLogAvailable(WARN) {
 		printLogInfo(BackgroundYellow, WARN)
+
 		fmt.Printf(format, log...)
 	}
 }
@@ -275,6 +286,7 @@ func Warnf(format string, log ...interface{}) {
 func Warnln(log ...interface{}) {
 	if isLogAvailable(WARN) {
 		printLogInfo(BackgroundYellow, WARN)
+
 		fmt.Println(log...)
 	}
 }
@@ -282,6 +294,7 @@ func Warnln(log ...interface{}) {
 func Info(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		printLogInfo(BackgroundGreen, INFO)
+
 		fmt.Print(log...)
 	}
 }
@@ -289,6 +302,7 @@ func Info(log ...interface{}) {
 func Infof(format string, log ...interface{}) {
 	if isLogAvailable(INFO) {
 		printLogInfo(BackgroundGreen, INFO)
+
 		fmt.Printf(format, log...)
 	}
 }
@@ -296,6 +310,7 @@ func Infof(format string, log ...interface{}) {
 func Infoln(log ...interface{}) {
 	if isLogAvailable(INFO) {
 		printLogInfo(BackgroundGreen, INFO)
+
 		fmt.Println(log...)
 	}
 }
@@ -303,6 +318,7 @@ func Infoln(log ...interface{}) {
 func Debug(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		printLogInfo(BackgroundCyan, DEBUG)
+
 		fmt.Print(log...)
 	}
 }
@@ -310,6 +326,7 @@ func Debug(log ...interface{}) {
 func Debugf(format string, log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		printLogInfo(BackgroundCyan, DEBUG)
+
 		fmt.Printf(format, log...)
 	}
 }
@@ -317,6 +334,7 @@ func Debugf(format string, log ...interface{}) {
 func Debugln(log ...interface{}) {
 	if isLogAvailable(DEBUG) {
 		printLogInfo(BackgroundCyan, DEBUG)
+
 		fmt.Println(log...)
 	}
 }
@@ -334,11 +352,17 @@ func concat(sep string, strs ...string) string {
 
 func printLogInfo(color Color, level LogLevel) {
 	fmt.Print(concat("", color.String(), level.String(), resetAll))
-	fmt.Printf(" %s [%s] <%d> ", time.Now().Format(timeFormat), getCallInfo(), os.Getpid)
+	printCaller(4)
 }
 
-func getCallInfo() *CallInfo {
-	pc, filePath, line, _ := runtime.Caller(2)
+func printCaller(depth int) {
+	t := time.Now().Format(timeFormat)
+	info := getCallInfo(depth)
+	fmt.Printf(" %s [%s] <%d> ", t, info, os.Getpid)
+}
+
+func getCallInfo(depth int) *CallInfo {
+	pc, filePath, line, _ := runtime.Caller(depth)
 	_, fileName := path.Split(filePath)
 	parts := strings.Split(runtime.FuncForPC(pc).Name(), ".")
 	pl := len(parts)
