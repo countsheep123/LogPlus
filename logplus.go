@@ -351,14 +351,14 @@ func concat(sep string, strs ...string) string {
 }
 
 func printLogInfo(color Color, level LogLevel) {
-	fmt.Print(concat("", color.String(), level.String(), resetAll))
+	fmt.Print(concat("", color.String(), level.String(), resetAll), " ")
 	printCaller(4)
 }
 
 func printCaller(depth int) {
 	t := time.Now().Format(timeFormat)
 	info := getCallInfo(depth)
-	fmt.Printf(" %s [%s] <%d> ", t, info, os.Getpid())
+	fmt.Printf("%s [%s] <%d> ", t, info, os.Getpid())
 }
 
 func getCallInfo(depth int) *CallInfo {
