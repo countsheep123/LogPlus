@@ -132,7 +132,7 @@ func SetLevel(level LogLevel) {
 }
 
 func isLogAvailable(level LogLevel) bool {
-	if level >= logLevel {
+	if level <= logLevel {
 		return true
 	}
 	return false
