@@ -358,7 +358,7 @@ func printLogInfo(color Color, level LogLevel) {
 func printCaller(depth int) {
 	t := time.Now().Format(timeFormat)
 	info := getCallInfo(depth)
-	fmt.Printf(" %s [%s] <%d> ", t, info, os.Getpid)
+	fmt.Printf(" %s [%s] <%d> ", t, info, os.Getpid())
 }
 
 func getCallInfo(depth int) *CallInfo {
