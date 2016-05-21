@@ -2,19 +2,22 @@ package logplus
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"sync"
 	"time"
 )
 
 type Logger struct {
+	output     io.Writer
 	timeFormat string
 	logLevel   LogLevel
 	mutex      *sync.Mutex
 }
 
-func NewLogger(tf string, l LogLevel) *Logger {
+func NewLogger(o io.Writer, tf string, l LogLevel) *Logger {
 	return &Logger{
+		output:     o,
 		timeFormat: tf,
 		logLevel:   l,
 		mutex:      new(sync.Mutex),
@@ -33,11 +36,22 @@ func (logger *Logger) setLevel(level LogLevel) {
 	logger.mutex.Unlock()
 }
 
+func (logger *Logger) setOutput(out io.Writer) {
+	logger.mutex.Lock()
+	logger.output = out
+	logger.mutex.Unlock()
+}
+
 func (logger *Logger) print(log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
-	fmt.Print(log...)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
+	s := fmt.Sprint(log...)
+	fmt.Fprint(logger.output, concat(": ", info, s))
 
 	logger.mutex.Unlock()
 }
@@ -45,8 +59,13 @@ func (logger *Logger) print(log ...interface{}) {
 func (logger *Logger) printf(format string, log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
-	fmt.Printf(format, log...)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
+	s := fmt.Sprintf(format, log...)
+	fmt.Fprintf(logger.output, concat(": ", info, s))
 
 	logger.mutex.Unlock()
 }
@@ -54,8 +73,13 @@ func (logger *Logger) printf(format string, log ...interface{}) {
 func (logger *Logger) println(log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
-	fmt.Println(log...)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
+	s := fmt.Sprint(log...)
+	fmt.Fprintln(logger.output, concat(": ", info, s))
 
 	logger.mutex.Unlock()
 }
@@ -63,9 +87,13 @@ func (logger *Logger) println(log ...interface{}) {
 func (logger *Logger) coloredPrint(color Color, log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
 	s := fmt.Sprint(log...)
-	fmt.Print(concat("", color.String(), s, resetAll))
+	fmt.Fprint(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
 
 	logger.mutex.Unlock()
 }
@@ -73,9 +101,13 @@ func (logger *Logger) coloredPrint(color Color, log ...interface{}) {
 func (logger *Logger) coloredPrintf(color Color, format string, log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
 	s := fmt.Sprintf(format, log...)
-	fmt.Print(concat("", color.String(), s, resetAll))
+	fmt.Fprint(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
 
 	logger.mutex.Unlock()
 }
@@ -83,9 +115,13 @@ func (logger *Logger) coloredPrintf(color Color, format string, log ...interface
 func (logger *Logger) coloredPrintln(color Color, log ...interface{}) {
 	logger.mutex.Lock()
 
-	logger.printCallInfo(4)
+	t := time.Now().Format(logger.timeFormat)
+	caller := getCallInfo(3)
+	pid := os.Getpid()
+	info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
+
 	s := fmt.Sprint(log...)
-	fmt.Println(concat("", color.String(), s, resetAll))
+	fmt.Fprintln(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
 
 	logger.mutex.Unlock()
 }
@@ -94,9 +130,14 @@ func (logger *Logger) leveledPrint(level LogLevel, log ...interface{}) {
 	logger.mutex.Lock()
 
 	if logger.isLogAvailable(level) {
-		logger.printLogInfo(level)
+		t := time.Now().Format(logger.timeFormat)
+		caller := getCallInfo(4)
+		pid := os.Getpid()
 
-		fmt.Print(log...)
+		info := fmt.Sprintf("%v%-5s%s %s [%s] <%d>", level.Color(), level.String(), resetAll, t, caller, pid)
+
+		s := fmt.Sprint(log...)
+		fmt.Fprint(logger.output, concat(": ", info, s))
 
 		switch level {
 		case FATAL:
@@ -114,9 +155,14 @@ func (logger *Logger) leveledPrintf(level LogLevel, format string, log ...interf
 	logger.mutex.Lock()
 
 	if logger.isLogAvailable(level) {
-		logger.printLogInfo(level)
+		t := time.Now().Format(logger.timeFormat)
+		caller := getCallInfo(4)
+		pid := os.Getpid()
 
-		fmt.Printf(format, log...)
+		info := fmt.Sprintf("%v%-5s%s %s [%s] <%d>", level.Color(), level.String(), resetAll, t, caller, pid)
+
+		s := fmt.Sprintf(format, log...)
+		fmt.Fprintf(logger.output, format, concat(": ", info, s))
 
 		switch level {
 		case FATAL:
@@ -134,9 +180,14 @@ func (logger *Logger) leveledPrintln(level LogLevel, log ...interface{}) {
 	logger.mutex.Lock()
 
 	if logger.isLogAvailable(level) {
-		logger.printLogInfo(level)
+		t := time.Now().Format(logger.timeFormat)
+		caller := getCallInfo(4)
+		pid := os.Getpid()
 
-		fmt.Println(log...)
+		info := fmt.Sprintf("%v%-5s%s %s [%s] <%d>", level.Color(), level.String(), resetAll, t, caller, pid)
+
+		s := fmt.Sprint(log...)
+		fmt.Fprintln(logger.output, concat(": ", info, s))
 
 		switch level {
 		case FATAL:
@@ -150,31 +201,9 @@ func (logger *Logger) leveledPrintln(level LogLevel, log ...interface{}) {
 	logger.mutex.Unlock()
 }
 
-func (logger *Logger) printLogInfo(level LogLevel) {
-	fmt.Print(concat("", level.Color().String(), level.String(), resetAll), " ")
-	logger.printCallInfo(5)
-}
-
-func (logger *Logger) printCallInfo(depth int) {
-	t := time.Now().Format(logger.timeFormat)
-	info := getCallInfo(depth)
-	fmt.Printf("%s [%s] <%d> ", t, info, os.Getpid())
-}
-
 func (logger *Logger) isLogAvailable(level LogLevel) bool {
 	if level <= logger.logLevel {
 		return true
 	}
 	return false
-}
-
-func concat(sep string, strs ...string) string {
-	var result = make([]byte, 0, 100)
-	for i, _ := range strs {
-		result = append(result, strs[i]...)
-		if i < len(strs)-1 {
-			result = append(result, sep...)
-		}
-	}
-	return string(result)
 }

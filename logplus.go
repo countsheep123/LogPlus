@@ -1,6 +1,8 @@
 package logplus
 
 import (
+	"io"
+	"os"
 	"time"
 )
 
@@ -9,7 +11,7 @@ var (
 )
 
 func init() {
-	lp = NewLogger(time.RFC3339, INFO)
+	lp = NewLogger(os.Stdout, time.RFC3339, INFO)
 }
 
 func SetTimeFormat(tf string) {
@@ -18,6 +20,10 @@ func SetTimeFormat(tf string) {
 
 func SetLevel(level LogLevel) {
 	lp.setLevel(level)
+}
+
+func SetOutput(out io.Writer) {
+	lp.setOutput(out)
 }
 
 func Log(log ...interface{}) {
