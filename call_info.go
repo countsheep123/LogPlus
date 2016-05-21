@@ -8,14 +8,13 @@ import (
 )
 
 type CallInfo struct {
-	PackageName string
-	FileName    string
-	FuncName    string
-	Line        int
+	FileName string
+	FuncName string
+	Line     int
 }
 
 func (ci CallInfo) String() string {
-	return fmt.Sprintf("%s#%s (%s:%d)", ci.PackageName, ci.FuncName, ci.FileName, ci.Line)
+	return fmt.Sprintf("%s (%s:%d)", ci.FuncName, ci.FileName, ci.Line)
 }
 
 func getCallInfo(depth int) *CallInfo {
@@ -23,19 +22,14 @@ func getCallInfo(depth int) *CallInfo {
 	_, fileName := path.Split(filePath)
 	parts := strings.Split(runtime.FuncForPC(pc).Name(), ".")
 	pl := len(parts)
-	packageName := ""
 	funcName := parts[pl-1]
 	if parts[pl-2][0] == '(' {
 		funcName = parts[pl-2] + "." + funcName
-		packageName = strings.Join(parts[0:pl-2], ".")
-	} else {
-		packageName = strings.Join(parts[0:pl-1], ".")
 	}
 
 	return &CallInfo{
-		PackageName: packageName,
-		FileName:    fileName,
-		FuncName:    funcName,
-		Line:        line,
+		FileName: fileName,
+		FuncName: funcName,
+		Line:     line,
 	}
 }
