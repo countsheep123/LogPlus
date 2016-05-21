@@ -3,15 +3,15 @@ package logplus
 type Color int
 
 const (
-	ForegroundDefault Color = iota
-	ForegroundBlack
-	ForegroundRed
-	ForegroundGreen
-	ForegroundYellow
-	ForegroundBlue
-	ForegroundMagenta
-	ForegroundCyan
-	ForegroundWhite
+	TextDefault Color = iota
+	TextBlack
+	TextRed
+	TextGreen
+	TextYellow
+	TextBlue
+	TextMagenta
+	TextCyan
+	TextWhite
 
 	BackgroundDefault
 	BackgroundBlack
@@ -26,23 +26,23 @@ const (
 
 func (color Color) String() string {
 	switch color {
-	case ForegroundDefault:
+	case TextDefault:
 		return "\033[39m"
-	case ForegroundBlack:
+	case TextBlack:
 		return "\033[30m"
-	case ForegroundRed:
+	case TextRed:
 		return "\033[31m"
-	case ForegroundGreen:
+	case TextGreen:
 		return "\033[32m"
-	case ForegroundYellow:
+	case TextYellow:
 		return "\033[33m"
-	case ForegroundBlue:
+	case TextBlue:
 		return "\033[34m"
-	case ForegroundMagenta:
+	case TextMagenta:
 		return "\033[35m"
-	case ForegroundCyan:
+	case TextCyan:
 		return "\033[36m"
-	case ForegroundWhite:
+	case TextWhite:
 		return "\033[97m"
 	case BackgroundDefault:
 		return "\033[49m"
