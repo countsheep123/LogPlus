@@ -9,6 +9,7 @@ const (
 	WARN
 	INFO
 	DEBUG
+	none
 )
 
 func (level LogLevel) String() string {

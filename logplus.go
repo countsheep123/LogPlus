@@ -11,7 +11,7 @@ var (
 )
 
 func init() {
-	lp = NewLogger(os.Stdout, time.RFC3339, INFO)
+	lp = NewLogger(os.Stdout, time.RFC3339, INFO, new(TextFormatter))
 }
 
 func SetTimeFormat(tf string) {
@@ -24,6 +24,10 @@ func SetLevel(level LogLevel) {
 
 func SetOutput(out io.Writer) {
 	lp.setOutput(out)
+}
+
+func SetFormatter(f Formatter) {
+	lp.setFormatter(f)
 }
 
 func Log(log ...interface{}) {

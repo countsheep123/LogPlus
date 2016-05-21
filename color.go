@@ -22,6 +22,8 @@ const (
 	BackgroundMagenta
 	BackgroundCyan
 	BackgroundWhite
+
+	NoColor
 )
 
 const (
@@ -66,6 +68,8 @@ func (color Color) String() string {
 		return "\033[46m"
 	case BackgroundWhite:
 		return "\033[107m"
+	case NoColor:
+		return ""
 	}
 	panic("Unknown value")
 }
