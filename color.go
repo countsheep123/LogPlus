@@ -24,6 +24,10 @@ const (
 	BackgroundWhite
 )
 
+const (
+	resetAll = "\033[0m"
+)
+
 func (color Color) String() string {
 	switch color {
 	case TextDefault:

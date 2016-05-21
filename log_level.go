@@ -28,3 +28,21 @@ func (level LogLevel) String() string {
 	}
 	panic("Unknown value")
 }
+
+func (level LogLevel) Color() Color {
+	switch level {
+	case PANIC:
+		return BackgroundRed
+	case FATAL:
+		return BackgroundRed
+	case ERROR:
+		return BackgroundMagenta
+	case WARN:
+		return BackgroundYellow
+	case INFO:
+		return BackgroundGreen
+	case DEBUG:
+		return BackgroundCyan
+	}
+	panic("Unknown value")
+}
