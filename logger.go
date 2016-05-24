@@ -61,9 +61,6 @@ func (logger *Logger) print(log ...interface{}) {
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
 
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprint(log...)
-	//fmt.Fprint(logger.output, concat(": ", info, s))
 	fmt.Fprint(logger.output, fmtLog)
 
 	logger.mutex.Unlock()
@@ -80,9 +77,6 @@ func (logger *Logger) printf(format string, log ...interface{}) {
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
 
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprintf(format, log...)
-	//fmt.Fprintf(logger.output, concat(": ", info, s))
 	fmt.Fprint(logger.output, fmtLog)
 
 	logger.mutex.Unlock()
@@ -99,9 +93,6 @@ func (logger *Logger) println(log ...interface{}) {
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
 
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprint(log...)
-	//fmt.Fprintln(logger.output, concat(": ", info, s))
 	fmt.Fprintln(logger.output, fmtLog)
 
 	logger.mutex.Unlock()
@@ -118,9 +109,6 @@ func (logger *Logger) coloredPrint(color Color, log ...interface{}) {
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
 
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprint(log...)
-	//fmt.Fprint(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
 	fmt.Fprint(logger.output, fmtLog)
 
 	logger.mutex.Unlock()
@@ -137,10 +125,6 @@ func (logger *Logger) coloredPrintf(color Color, format string, log ...interface
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
 
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprintf(format, log...)
-	//fmt.Fprint(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
-
 	fmt.Fprint(logger.output, fmtLog)
 
 	logger.mutex.Unlock()
@@ -156,10 +140,6 @@ func (logger *Logger) coloredPrintln(color Color, log ...interface{}) {
 	msg := NewLogMessage(color, log...)
 	entry := NewLogEntry(none, t, caller, pid, msg)
 	fmtLog := logger.formatter.Format(entry)
-
-	//info := fmt.Sprintf("%s [%s] <%d>", t, caller, pid)
-	//s := fmt.Sprint(log...)
-	//fmt.Fprintln(logger.output, concat(": ", info, concat("", color.String(), s, resetAll)))
 
 	fmt.Fprintln(logger.output, fmtLog)
 
